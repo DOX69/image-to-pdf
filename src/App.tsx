@@ -12,13 +12,14 @@ function App() {
   const [pages, setPages] = useState<PageItem[]>([]);
   const [isGenerating, setIsGenerating] = useState(false);
   const [password, setPassword] = useState<string | null>(null);
+  const [isPasswordProtected, setIsPasswordProtected] = useState(false);
 
   // Cleanup object URLs to prevent memory leaks
   useEffect(() => {
     return () => {
       pages.forEach((p) => URL.revokeObjectURL(p.blobUrl));
     };
-  }, []);
+  }, [pages]);
 
   const handleFilesAdded = async (files: File[]) => {
     const sorted = sortFilesNumerically(files);
@@ -75,12 +76,13 @@ function App() {
   const handleClear = () => {
     pages.forEach((p) => URL.revokeObjectURL(p.blobUrl));
     setPages([]);
+    setIsPasswordProtected(false);
   };
 
   const handleGenerate = async () => {
     setIsGenerating(true);
     try {
-      const generatedPassword = await generatePdf(pages);
+      const generatedPassword = await generatePdf(pages, { protect: isPasswordProtected });
       setPassword(generatedPassword);
     } catch (error) {
       console.error('Failed to generate PDF', error);
@@ -92,9 +94,14 @@ function App() {
 
   return (
     <main className="container">
-      <header className="header">
-        <h1>Image to Secure PDF</h1>
-        <p>Drop images or ZIP archives. Sort them. Generate a pixel-perfect A4 PDF.</p>
+      <header className="header" style={{ marginBottom: '80px' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '20px' }}>
+          <span style={{ fontSize: '0.7rem', textTransform: 'uppercase', letterSpacing: '0.1em', opacity: 0.6 }}>
+            Status: Local Processing Enabled
+          </span>
+        </div>
+        <h1>image to secure pdf</h1>
+        <p>A precision tool for converting images and archives into password-protected documents, 100% client-side.</p>
       </header>
 
       <DropzoneArea onFilesAdded={handleFilesAdded} />
@@ -112,6 +119,8 @@ function App() {
             onGenerate={handleGenerate}
             canGenerate={pages.length > 0}
             isGenerating={isGenerating}
+            isPasswordProtected={isPasswordProtected}
+            onTogglePassword={() => setIsPasswordProtected(!isPasswordProtected)}
           />
         </>
       )}

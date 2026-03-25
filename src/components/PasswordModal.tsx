@@ -18,12 +18,13 @@ export function PasswordModal({ password, onClose }: PasswordModalProps) {
 
   return (
     <div className="modal-overlay">
-      <div className="modal-content card">
-        <h3>PDF Generated Successfully</h3>
-        <p className="warning-text">
-          <strong>WARNING:</strong> This is your 12-character document password. 
-          It will be shown <strong>only once</strong>. Please copy it now.
-        </p>
+      <div className="modal-content">
+        <h2>pdf generated</h2>
+        <div className="warning-text">
+          <strong>Security Note:</strong> This is your unique document password. 
+          It is shown <strong>only once</strong> and never stored. 
+          Please copy it now to access your PDF.
+        </div>
 
         <div className="password-box">
           <code>{password}</code>
@@ -31,15 +32,14 @@ export function PasswordModal({ password, onClose }: PasswordModalProps) {
             type="button" 
             className="btn btn-icon" 
             onClick={handleCopy}
-            title="Copy to clipboard"
           >
-            {copied ? '✅ Copied' : '📋 Copy'}
+            {copied ? 'copied' : 'copy'}
           </button>
         </div>
 
         <div className="modal-actions">
           <button type="button" className="btn btn-primary" onClick={onClose}>
-            I have saved the password
+            done
           </button>
         </div>
       </div>
