@@ -1,21 +1,28 @@
-/* Impeccable Style Base CSS */
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@100..900&display=swap');
+
+/* Stitch Framework - Warm Minimalism Aesthetic */
 :root {
-  --bg-color: #FAFAFA;
-  --surface-color: #FFFFFF;
-  --text-primary: #1A1A1A;
-  --text-secondary: #6B7280;
-  --border-color: #E5E7EB;
-  --primary-color: #2563EB;
-  --danger-color: #DC2626;
-  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-  font-family: 'Inter', system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
+  /* OKLCH Color System */
+  --bg-color: oklch(98% 0.01 20);      /* Warm Paper */
+  --surface-color: oklch(100% 0 0);    /* Pure White for rare cases */
+  --text-primary: oklch(25% 0.02 20);   /* Deep Charcoal */
+  --text-secondary: oklch(50% 0.02 20); /* Muted Charcoal */
+  --border-color: oklch(90% 0.01 20);   /* Subtle Warm Border */
+  --primary-color: oklch(60% 0.15 250);  /* Refined Blue */
+  --danger-color: oklch(65% 0.18 25);    /* Muted Red */
+  
+  --shadow-sm: 0 1px 2px 0 oklch(0% 0 0 / 0.03);
+  --shadow-md: 0 4px 6px -1px oklch(0% 0 0 / 0.05);
+  
+  font-family: 'Geist', system-ui, sans-serif;
+  line-height: 1.6;
   font-weight: 400;
   color: var(--text-primary);
   background-color: var(--bg-color);
   font-size: 16px;
+  
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 body {
@@ -25,60 +32,68 @@ body {
 }
 
 .container {
-  max-width: 1000px;
+  max-width: 900px;
   margin: 0 auto;
-  padding: 40px 20px;
+  padding: 80px 40px;
 }
 
 .header {
-  text-align: center;
-  margin-bottom: 40px;
+  text-align: left; /* Asymmetrical / Editorial Feel */
+  margin-bottom: 80px;
 }
 
 .header h1 {
-  font-size: 2.5rem;
-  font-weight: 600;
-  letter-spacing: -0.025em;
-  margin: 0 0 10px 0;
+  font-family: 'Instrument Serif', serif;
+  font-size: clamp(2.5rem, 8vw, 4rem);
+  font-weight: 400;
+  font-style: italic;
+  line-height: 1.1;
+  margin: 0 0 20px 0;
+  letter-spacing: -0.02em;
 }
 
 .header p {
   color: var(--text-secondary);
-  font-size: 1.1rem;
+  font-size: 1.25rem;
+  max-width: 500px;
   margin: 0;
+  font-weight: 300;
 }
 
+/* No-Card Policy: Using whitespace and subtle dividers */
 .card {
-  background: var(--surface-color);
-  border-radius: 12px;
-  box-shadow: var(--shadow-sm);
-  border: 1px solid var(--border-color);
+  background: transparent;
+  border-radius: 0;
+  box-shadow: none;
+  border: none;
 }
 
 /* Grid */
 .sortable-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 20px;
-  margin-top: 30px;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 48px;
+  margin-top: 60px;
 }
 
 .grid-item {
   position: relative;
   display: flex;
   flex-direction: column;
-  overflow: hidden;
-  transition: box-shadow 0.2s;
+  background: transparent;
+  transition: opacity 0.2s ease;
 }
 
 .drag-handle {
   cursor: grab;
-  height: 250px;
-  background: #f0f0f0;
+  height: 320px;
+  background: oklch(95% 0.01 20);
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
+  border-radius: 4px; /* Very subtle rounding */
+  border: 1px solid var(--border-color);
 }
 
 .drag-handle:active {
@@ -92,88 +107,101 @@ body {
 }
 
 .item-details {
-  padding: 12px;
+  padding: 16px 0;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 8px;
 }
 
 .filename {
-  font-size: 0.875rem;
+  font-size: 0.9rem;
   font-weight: 500;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   color: var(--text-primary);
+  font-family: 'Geist', sans-serif;
+  letter-spacing: -0.01em;
 }
 
 .item-actions {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
+  gap: 12px;
 }
 
 /* Buttons */
 .btn {
-  padding: 10px 20px;
-  border-radius: 8px;
+  padding: 12px 24px;
+  border-radius: 2px; /* Precision/Sharp corners */
   font-weight: 500;
-  border: none;
+  border: 1px solid transparent;
   cursor: pointer;
-  transition: all 0.2s;
-  font-size: 1rem;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  font-size: 0.95rem;
+  font-family: 'Geist', sans-serif;
+  text-transform: lowercase; /* Editorial touch */
 }
 
 .btn:disabled {
-  opacity: 0.5;
+  opacity: 0.3;
   cursor: not-allowed;
 }
 
 .btn-primary {
-  background: var(--primary-color);
-  color: white;
+  background: var(--text-primary);
+  color: var(--bg-color);
 }
 
 .btn-primary:hover:not(:disabled) {
-  background: #1d4ed8;
+  opacity: 0.9;
 }
 
 .btn-secondary {
-  background: #F3F4F6;
+  background: transparent;
+  border-color: var(--border-color);
   color: var(--text-primary);
 }
 
 .btn-secondary:hover:not(:disabled) {
-  background: #E5E7EB;
+  background: oklch(95% 0.01 20);
 }
 
 .btn-tiny {
-  padding: 6px 10px;
-  border-radius: 6px;
-  font-size: 0.75rem;
+  padding: 4px 8px;
+  font-size: 0.7rem;
   border: 1px solid var(--border-color);
-  background: var(--surface-color);
-  cursor: pointer;
+  background: transparent;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
 }
 
 .btn-tiny:hover {
-  background: var(--bg-color);
+  border-color: var(--text-primary);
+  color: var(--text-primary);
 }
 
 .btn-danger {
   color: var(--danger-color);
+  border: none;
+  background: transparent;
+  padding: 4px 0;
+  font-size: 0.75rem;
 }
+
 .btn-danger:hover {
-  background: #FEF2F2;
-  border-color: #FECACA;
+  text-decoration: underline;
 }
 
 /* Action Panel */
 .action-panel {
   display: flex;
-  justify-content: flex-end;
-  gap: 15px;
-  margin-top: 40px;
-  padding-top: 20px;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
+  margin-top: 100px;
+  padding-top: 40px;
   border-top: 1px solid var(--border-color);
 }
 
@@ -184,8 +212,8 @@ body {
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.4);
-  backdrop-filter: blur(4px);
+  background: oklch(25% 0.02 20 / 0.1);
+  backdrop-filter: blur(12px);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -194,49 +222,80 @@ body {
 }
 
 .modal-content {
-  max-width: 400px;
+  background: var(--bg-color);
+  max-width: 440px;
   width: 100%;
-  padding: 30px;
-  text-align: center;
+  padding: 48px;
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow-md);
+}
+
+.modal-content h2 {
+  font-family: 'Instrument Serif', serif;
+  font-size: 2rem;
+  margin-top: 0;
+  font-weight: 400;
 }
 
 .warning-text {
-  color: var(--text-secondary);
-  font-size: 0.9rem;
-  margin: 20px 0;
-  padding: 15px;
-  background: #FFFBEB;
-  border-radius: 8px;
-  border: 1px solid #FEF3C7;
-  color: #92400E;
+  font-size: 0.85rem;
+  margin: 32px 0;
+  padding: 20px;
+  background: oklch(95% 0.01 50); /* Subtle warm alert */
+  border-left: 2px solid oklch(60% 0.1 50);
+  color: oklch(30% 0.05 50);
+  text-align: left;
 }
 
 .password-box {
   display: flex;
   align-items: center;
-  background: var(--bg-color);
-  border: 1px solid var(--border-color);
-  border-radius: 8px;
-  padding: 10px;
-  margin-bottom: 25px;
+  background: transparent;
+  border-bottom: 1px solid var(--text-primary);
+  border-radius: 0;
+  padding: 12px 0;
+  margin-bottom: 40px;
 }
 
 .password-box code {
   flex: 1;
-  font-size: 1.25rem;
-  font-family: monospace;
-  font-weight: 600;
+  font-size: 1.5rem;
+  font-family: 'Geist Mono', monospace;
+  font-weight: 400;
   letter-spacing: 0.1em;
+  color: var(--text-primary);
 }
 
 .btn-icon {
   background: transparent;
-  padding: 8px 12px;
-  border: 1px solid var(--border-color);
-  font-size: 0.875rem;
+  padding: 8px;
+  border: none;
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  text-decoration: underline;
 }
 
 .modal-actions {
   display: flex;
-  justify-content: center;
+  justify-content: flex-end;
+}
+
+/* Custom Dropzone styling to match Stitch */
+.dropzone {
+  border: 1px dashed var(--border-color);
+  padding: 80px 40px;
+  text-align: center;
+  transition: border-color 0.2s;
+  cursor: pointer;
+}
+
+.dropzone:hover {
+  border-color: var(--text-primary);
+}
+
+.dropzone p {
+  font-family: 'Geist', sans-serif;
+  font-weight: 300;
+  font-size: 1.1rem;
+  color: var(--text-secondary);
 }

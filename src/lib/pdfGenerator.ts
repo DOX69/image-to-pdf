@@ -1,4 +1,5 @@
 import { jsPDF } from 'jspdf';
+import type { jsPDFOptions } from 'jspdf';
 
 export type PageItem = {
   id: string;
@@ -20,23 +21,29 @@ function generatePassword(): string {
   return pass;
 }
 
-export async function generatePdf(images: PageItem[]): Promise<string> {
-  const password = generatePassword();
+export async function generatePdf(images: PageItem[], options?: { protect?: boolean }): Promise<string | null> {
+  const protect = options?.protect ?? false;
+  const password = protect ? generatePassword() : null;
   
   if (images.length === 0) return password;
 
   // The first page uses the orientation of the first image
   const firstOrientation = images[0].userConfirmedOrientation || images[0].detectedOrientation;
 
-  const pdf = new jsPDF({
+  const pdfConfig: jsPDFOptions = {
     orientation: firstOrientation,
     format: 'a4',
-    encryption: {
+  };
+
+  if (protect && password) {
+    pdfConfig.encryption = {
       userPassword: password,
       ownerPassword: password,
       userPermissions: ['print']
-    }
-  });
+    };
+  }
+
+  const pdf = new jsPDF(pdfConfig);
 
   const A4_DIMENSIONS = {
     portrait: { width: 210, height: 297 },

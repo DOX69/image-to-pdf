@@ -21,6 +21,9 @@ export function DropzoneArea({ onFilesAdded }: DropzoneAreaProps) {
         }
       }
       onFilesAdded(outputFiles);
+      
+      // Reset input value just in case
+      if (fileInputRef.current) fileInputRef.current.value = '';
     },
     [onFilesAdded]
   );
@@ -38,6 +41,9 @@ export function DropzoneArea({ onFilesAdded }: DropzoneAreaProps) {
         }
       }
       onFilesAdded(outputFiles);
+      
+      // CRITICAL FIX: Reset the input value so the same file can be selected again
+      e.target.value = '';
     }
   };
 
@@ -49,16 +55,6 @@ export function DropzoneArea({ onFilesAdded }: DropzoneAreaProps) {
       onDragOver={(e) => e.preventDefault()}
       onClick={() => fileInputRef.current?.click()}
       className="dropzone"
-      style={{
-        border: '2px dashed #ccc',
-        borderRadius: '12px',
-        padding: '60px',
-        textAlign: 'center',
-        margin: '20px 0',
-        cursor: 'pointer',
-        background: '#fafafa',
-        transition: 'background 0.2s',
-      }}
     >
       <input
         type="file"
@@ -68,12 +64,10 @@ export function DropzoneArea({ onFilesAdded }: DropzoneAreaProps) {
         multiple
         accept="image/*,.zip"
       />
-      <h2 style={{ margin: 0, fontWeight: 500, color: '#333' }}>
-        Click or Drag & Drop ZIP or Images
-      </h2>
-      <p style={{ color: '#666', marginTop: '10px' }}>
-        ZIP archives will be automatically extracted.
-      </p>
+      <p>Click or Drag & Drop ZIP or Images</p>
+      <span style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', opacity: 0.7 }}>
+        secure, client-side processing
+      </span>
     </div>
   );
 }
