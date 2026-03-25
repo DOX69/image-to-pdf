@@ -1,5 +1,3 @@
-import React from 'react';
-
 interface ActionPanelProps {
   onClear: () => void;
   onGenerate: () => void;

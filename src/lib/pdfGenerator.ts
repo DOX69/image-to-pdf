@@ -1,4 +1,5 @@
-import { jsPDF, jsPDFOptions } from 'jspdf';
+import { jsPDF } from 'jspdf';
+import type { jsPDFOptions } from 'jspdf';
 
 export type PageItem = {
   id: string;
