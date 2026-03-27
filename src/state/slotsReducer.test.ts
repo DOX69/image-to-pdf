@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { slotsReducer, ImageSlot } from './slotsReducer';
+import { slotsReducer, type ImageSlot } from './slotsReducer';
 
 describe('slotsReducer', () => {
   const mockFile = new File([''], 'test.jpg', { type: 'image/jpeg' });
